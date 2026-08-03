@@ -1,0 +1,13 @@
+#include <iostream> // Librerias
+
+using namespace std;
+
+int main()
+{
+    cout<<"Bolivianos el hado propicio"<< endl;
+    cout<<"Coronó nuestros votos y anhelos"<< endl;
+    cout<<"Es ya libre, ya libre este suelo"<< endl;
+    cout<<"Ya cesó su servil condición"<< endl;
+
+    return 0;
+}
