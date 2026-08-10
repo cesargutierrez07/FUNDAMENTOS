@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    float pi,radio,Area;
+    pi=3.14;
+    cout<<"Ingresar el radio: ";
+    cin>>radio;
+    Area=(pi*(radio*radio));
+    cout<<"El area es: "<<Area;
+    
+
+    return 0;
+}
