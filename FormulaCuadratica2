@@ -1,0 +1,50 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() 
+{
+    float a, b, c;
+    float x1, x2, i;
+    
+    cout << "Escribe el valor de a: ";
+    cin >> a;
+    cout << "Escribe el valor de b: ";
+    cin >> b;
+    cout << "Escribe el valor de c: ";
+    cin >> c;
+    
+    if (a == 0)
+    {
+        cout << "Tiene una solucion, pero no es ecuacion cuadratica." << endl;
+        cout << "La solucion es: " << -c / b << endl;
+    } 
+    else 
+    {
+        
+        if ((b * b - 4 * a * c) > 0) {
+            cout << "Tiene dos soluciones reales." << endl;
+            x1 = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
+            x2 = (-b - sqrt(b * b - 4 * a * c)) / (2 * a);
+            cout << "La primer solucion es: " << x1 << endl;
+            cout << "La segunda solucion es: " << x2 << endl;
+        } 
+        
+        else if ((b * b - 4 * a * c) == 0) {
+            cout << "Tiene una solucion real unica." << endl;
+            cout << "La solucion es: " << -b / (2 * a) << endl;
+        } 
+        
+        else {
+            cout << "Tiene dos soluciones imaginarias. " << endl;
+            x1 = -b / (2 * a);
+            i = sqrt(-(b * b - 4 * a * c)) / (2 * a);
+            
+            cout << "La primer solucion es: " << x1 << " + " << i << "i" << endl;
+            cout << "La segunda solucion es: " << x1 << " - " << i << "i" << endl;
+        }
+    }
+    
+    return 0;
+} 
