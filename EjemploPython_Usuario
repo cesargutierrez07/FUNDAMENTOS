@@ -1,0 +1,282 @@
+# VECTORES
+usuarios = []
+personas = []
+
+
+# VALIDAR FECHA DE NACIMIENTO
+def validar_fecha(fecha):
+    if len(fecha) != 10 or fecha[2] != "/" or fecha[5] != "/":
+        return False
+
+    if not (fecha[0:2] + fecha[3:5] + fecha[6:10]).isdigit():
+        return False
+
+    dia = int(fecha[0:2])
+    mes = int(fecha[3:5])
+    anio = int(fecha[6:10])
+
+    if anio < 1:
+        return False
+
+    if mes < 1 or mes > 12:
+        return False
+
+    # Verificar cantidad de dias del mes
+    if mes == 2:
+        # Verificar año bisiesto
+        if anio % 400 == 0 or (anio % 4 == 0 and anio % 100 != 0):
+            dias = 29
+        else:
+            dias = 28
+
+    elif mes == 4 or mes == 6 or mes == 9 or mes == 11:
+        dias = 30
+
+    else:
+        dias = 31
+
+    if dia < 1 or dia > dias:
+        return False
+
+    return True
+
+
+# VALIDAR CELULAR (Máximo 8 dígitos numéricos)
+def validar_celular(celular):
+    return celular.isdigit() and len(celular) <= 8
+
+
+# VALIDAR PAGINA WEB (Debe empezar por 'www')
+def validar_pagina_web(pagina_web):
+    return pagina_web.startswith("www")
+
+
+# REGISTRAR USUARIO
+def registrar_usuario():
+    print("\n--- REGISTRAR USUARIO ---")
+    usuario = input("Ingrese usuario: ")
+
+    # Verificar si el usuario ya existe
+    for u in usuarios:
+        if u[0] == usuario:
+            print("El usuario ya existe.")
+            return
+
+    clave = input("Ingrese contraseña: ")
+    usuarios.append([usuario, clave])
+    print("Usuario registrado correctamente.")
+
+
+# LISTAR USUARIOS
+def listar_usuarios():
+    print("\n--- LISTA DE USUARIOS ---")
+
+    if len(usuarios) == 0:
+        print("No hay usuarios registrados.")
+    else:
+        for i in range(len(usuarios)):
+            print("\nUsuario Nro:", i + 1)
+            print("Usuario:", usuarios[i][0])
+
+
+# MODIFICAR USUARIO
+def modificar_usuario():
+    print("\n--- MODIFICAR USUARIO ---")
+    nombre = input("Ingrese el usuario que desea modificar: ")
+
+    for u in usuarios:
+        if u[0] == nombre:
+            u[0] = input("Nuevo nombre de usuario: ")
+            u[1] = input("Nueva contraseña: ")
+            print("Usuario modificado correctamente.")
+            return
+
+    print("Usuario no encontrado.")
+
+
+# BORRAR USUARIO
+def borrar_usuario():
+    print("\n--- BORRAR USUARIO ---")
+    nombre = input("Ingrese el usuario que desea eliminar: ")
+
+    for u in usuarios:
+        if u[0] == nombre:
+            usuarios.remove(u)
+            print("Usuario eliminado correctamente.")
+            return
+
+    print("Usuario no encontrado.")
+
+
+# INICIAR SESION
+def login():
+    print("\n--- INICIAR SESION ---")
+    usuario = input("Usuario: ")
+    clave = input("Contraseña: ")
+
+    for u in usuarios:
+        if u[0] == usuario and u[1] == clave:
+            print("Bienvenido", usuario)
+            return True
+
+    print("Usuario o contraseña incorrectos.")
+    return False
+
+
+# REGISTRAR PERSONA
+def registrar_persona():
+    print("\n--- REGISTRAR PERSONA ---")
+
+    nombre = input("Nombre: ")
+    fecha = input("Fecha de nacimiento (DD/MM/AAAA): ")
+
+    while not validar_fecha(fecha):
+        print("Fecha incorrecta. Ingrese una fecha real.")
+        fecha = input("Fecha de nacimiento (DD/MM/AAAA): ")
+
+    direccion = input("Dirección: ")
+    telefono = input("Teléfono: ")
+
+    celular = input("Celular (máx. 8 dígitos): ")
+    while not validar_celular(celular):
+        print("Celular incorrecto. Debe contener solo números y máximo 8 dígitos.")
+        celular = input("Celular (máx. 8 dígitos): ")
+
+    pagina_web = input("Página web (debe empezar con 'www'): ")
+    while not validar_pagina_web(pagina_web):
+        print("Página web incorrecta. Debe empezar por 'www'.")
+        pagina_web = input("Página web (debe empezar con 'www'): ")
+
+    persona = [nombre, fecha, direccion, telefono, celular, pagina_web]
+    personas.append(persona)
+
+    print("Persona registrada correctamente.")
+
+
+# LISTAR PERSONAS
+def listar_personas():
+    print("\n--- LISTA DE PERSONAS ---")
+
+    if len(personas) == 0:
+        print("No existen personas registradas.")
+    else:
+        for i in range(len(personas)):
+            print("\nPersona Nro:", i + 1)
+            print("Nombre:", personas[i][0])
+            print("Fecha de nacimiento:", personas[i][1])
+            print("Dirección:", personas[i][2])
+            print("Teléfono:", personas[i][3])
+            print("Celular:", personas[i][4])
+            print("Página web:", personas[i][5])
+
+
+# BORRAR PERSONA
+def borrar_persona():
+    print("\n--- BORRAR PERSONA ---")
+    nombre = input("Ingrese el nombre de la persona a eliminar: ")
+
+    for p in personas:
+        if p[0] == nombre:
+            personas.remove(p)
+            print("Persona eliminada correctamente.")
+            return
+
+    print("Persona no encontrada.")
+
+
+# MODIFICAR PERSONA
+def modificar_persona():
+    print("\n--- MODIFICAR PERSONA ---")
+    nombre = input("Ingrese el nombre de la persona a modificar: ")
+
+    for p in personas:
+        if p[0] == nombre:
+            p[0] = input("Nuevo nombre: ")
+
+            fecha = input("Nueva fecha de nacimiento (DD/MM/AAAA): ")
+            while not validar_fecha(fecha):
+                print("Fecha incorrecta. Ingrese una fecha real.")
+                fecha = input("Nueva fecha de nacimiento (DD/MM/AAAA): ")
+            p[1] = fecha
+
+            p[2] = input("Nueva dirección: ")
+            p[3] = input("Nuevo teléfono: ")
+
+            celular = input("Nuevo celular (máx. 8 dígitos): ")
+            while not validar_celular(celular):
+                print("Celular incorrecto. Debe contener solo números y máximo 8 dígitos.")
+                celular = input("Nuevo celular (máx. 8 dígitos): ")
+            p[4] = celular
+
+            pagina_web = input("Nueva página web (debe empezar con 'www'): ")
+            while not validar_pagina_web(pagina_web):
+                print("Página web incorrecta. Debe empezar por 'www'.")
+                pagina_web = input("Nueva página web (debe empezar con 'www'): ")
+            p[5] = pagina_web
+
+            print("Persona modificada correctamente.")
+            return
+
+    print("Persona no encontrada.")
+
+
+# MENU DE PERSONAS
+def menu_personas():
+    while True:
+        print("\n===== MENU DE PERSONAS =====")
+        print("1. Registrar persona")
+        print("2. Listar personas")
+        print("3. Modificar persona")
+        print("4. Borrar persona")
+        print("5. Cerrar sesion")
+
+        op = input("Seleccione una opcion: ")
+
+        if op == "1":
+            registrar_persona()
+        elif op == "2":
+            listar_personas()
+        elif op == "3":
+            modificar_persona()
+        elif op == "4":
+            borrar_persona()
+        elif op == "5":
+            print("Sesion cerrada.")
+            break
+        else:
+            print("Opcion incorrecta.")
+
+
+# MENU PRINCIPAL DE USUARIOS
+def main():
+    while True:
+        print("\n===== SISTEMA DE LOGIN =====")
+        print("1. Registrar usuario")
+        print("2. Listar usuarios")
+        print("3. Modificar usuario")
+        print("4. Borrar usuario")
+        print("5. Iniciar sesion")
+        print("6. Salir")
+
+        op = input("Seleccione una opcion: ")
+
+        if op == "1":
+            registrar_usuario()
+        elif op == "2":
+            listar_usuarios()
+        elif op == "3":
+            modificar_usuario()
+        elif op == "4":
+            borrar_usuario()
+        elif op == "5":
+            if login():
+                menu_personas()
+        elif op == "6":
+            print("Gracias por utilizar el sistema.")
+            break
+        else:
+            print("Opcion incorrecta.")
+
+
+# EJECUTAR PROGRAMA
+main()
